@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de Produtos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 56px; /* Espaço para a navbar fixa */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .table thead th {
+            background-color: #007bff; /* Cor de fundo do cabeçalho da tabela */
+            color: white; /* Cor do texto do cabeçalho da tabela */
+        }
+        .btn-custom {
+            background-color: #007bff; /* Cor personalizada para o botão de editar */
+            color: white; /* Cor do texto do botão */
+        }
+        .btn-custom:hover {
+            background-color: #0056b3; /* Cor ao passar o mouse sobre o botão */
+            color: white; /* Cor do texto ao passar o mouse */
+        }
+        .footer {
+            background-color: #f8f9fa; /* Cor de fundo do rodapé */
+            padding: 20px; /* Espaçamento interno do rodapé */
+            text-align: center; /* Centraliza o texto do rodapé */
+            position: relative; /* Permite que o rodapé se posicione corretamente */
+            bottom: 0; /* Posiciona o rodapé na parte inferior */
+            width: 100%; /* Largura total do rodapé */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Lista de Produtos</h1>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>3</td>
+            <td>SMARTPHONE</td>
+            <td>Equipamento 5</td>
+            <td>R$ 4</td>
+            <td>4</td>
+            <td>
+                <a href="/produto/editar/3" class="btn btn-custom">Editar</a>
+                <button class="btn btn-danger">Excluir</button>
+            </td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>SMARTPHONE</td>
+            <td>Equipamento 5</td>
+            <td>R$ 4</td>
+            <td>4</td>
+            <td>
+                <a href="/produto/editar/4" class="btn btn-custom">Editar</a>
+                <button class="btn btn-danger">Excluir</button>
+            </td>
+        </tr>
+        <!-- Adicione mais linhas conforme necessário -->
+        <tr>
+            <td colspan="5" class="text-end">
+                <a href="/produto/cadastrar" class="btn btn-primary">Novo Produto</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2024 Sistema de Produtos - Todos os direitos reservados.</p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

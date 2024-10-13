@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Editar Produto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4; /* Cor de fundo suave */
+            font-family: 'Roboto', sans-serif; /* Fonte moderna */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+        header {
+            background: #5B6BCE; /* Azul Suave */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+        }
+        .navbar {
+            justify-content: center;
+            text-align: center;
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px; /* Largura máxima do formulário */
+            margin: 30px auto; /* Centraliza verticalmente e horizontalmente */
+            background-color: #ffffff; /* Fundo branco para o formulário */
+            border-radius: 12px; /* Bordas arredondadas */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada */
+            padding: 40px; /* Espaçamento interno */
+        }
+        h1 {
+            color: #333; /* Cor do título */
+            font-size: 2rem; /* Tamanho do título */
+            margin-bottom: 20px; /* Espaçamento inferior */
+            text-align: center; /* Centraliza o título */
+        }
+        .alert {
+            margin-bottom: 20px; /* Espaçamento entre alertas e o formulário */
+        }
+        footer {
+            background: #5B6BCE; /* Azul Suave */
+            color: white;
+            text-align: center;
+            padding: 10px; /* Espaçamento interno do rodapé */
+            margin-top: auto; /* Posiciona o rodapé na parte inferior */
+        }
+        .btn-primary {
+            background-color: #5B6BCE; /* Azul Suave */
+            border-color: #5B6BCE; /* Borda do botão primário */
+        }
+        .btn-primary:hover {
+            background-color: #4A5FB2; /* Azul mais escuro para hover */
+            border-color: #3B4A94; /* Borda ao passar o mouse sobre o botão primário */
+        }
+        .form-control:focus {
+            border-color: #5B6BCE; /* Cor da borda ao focar no input */
+            box-shadow: 0 0 5px rgba(91, 107, 206, 0.5); /* Sombra ao focar no input */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid justify-content-center">
+            <a class="navbar-brand" href="#">
+                <img src="/images/logo.png" alt=""> Sistema Cadastro de Produtos
+            </a>
+        </div>
+    </nav>
+</header>
+
+<div class="container" layout:fragment="conteudo">
+    <h1>Editar Produto</h1>
+
+    <form id="produtoForm" th:action="@{/produto/editar}" method="post" th:object="${produto}">
+        <input type="hidden" th:field="*{id}">
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Nome</label>
+            <input type="text" th:field="*{nome}" class="form-control" placeholder="Nome do produto" required>
+            <p th:if="${#fields.hasErrors('nome')}" class="text-danger" th:errors="*{nome}"></p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Descrição</label>
+            <textarea th:field="*{descricao}" class="form-control" placeholder="Descrição do produto" required></textarea>
+            <p th:if="${#fields.hasErrors('descricao')}" class="text-danger" th:errors="*{descricao}"></p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Preço</label>
+            <input type="text" th:field="*{preco}" class="form-control" placeholder="Preço do produto" required>
+            <p th:if="${#fields.hasErrors('preco')}" class="text-danger" th:errors="*{preco}"></p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Quantidade</label>
+            <input type="number" th:field="*{quantidade}" class="form-control" placeholder="Quantidade disponível" required>
+            <p th:if="${#fields.hasErrors('quantidade')}" class="text-danger" th:errors="*{quantidade}"></p>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" th:field="*{disponivel}" class="form-check-input">
+            <label class="form-check-label">Disponível</label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Data de Fabricação</label>
+            <input type="date" th:field="*{dataFabricacao}" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Categoria</label>
+            <input type="text" th:field="*{categoria}" class="form-control" placeholder="Categoria do produto">
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" onclick="showMessage(event)">Salvar</button>
+        <a href="/produto/listar" class="btn btn-secondary w-100 mt-2">Voltar para a lista</a>
+    </form>
+
+    <div id="successMessage" class="alert alert-success mt-3" style="display: none;">
+        Produto salvo com sucesso!
+    </div>
+</div>
+
+<footer>
+    <p>© 2024 Sistema de Produtos - Todos os direitos reservados.</p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    function showMessage(event) {
+        event.preventDefault(); // Impede o envio do formulário
+        const form = document.getElementById('produtoForm');
+
+        // Validação do formulário
+        if (form.checkValidity()) {
+            // Simula o envio do formulário
+            setTimeout(() => {
+                // Exibe a mensagem de sucesso
+                document.getElementById('successMessage').style.display = 'block';
+                // Aqui você pode adicionar a lógica para realmente enviar o formulário se necessário
+            }, 500);
+        } else {
+            // Se o formulário não for válido, exibe os erros
+            form.reportValidity();
+        }
+    }
+</script>
+</body>
+</html>

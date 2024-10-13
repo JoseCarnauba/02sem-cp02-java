@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de Produtos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 56px; /* Espaço para a navbar fixa */
+            background-color: #f8f9fa; /* Cor de fundo clara */
+            font-family: 'Roboto', sans-serif; /* Fonte moderna */
+        }
+        h1 {
+            color: #007bff; /* Cor do título */
+            font-size: 2.5rem; /* Tamanho do título */
+            font-weight: bold; /* Negrito */
+            margin-bottom: 30px; /* Espaçamento inferior */
+        }
+        .alert {
+            margin-bottom: 20px; /* Espaçamento entre alertas e a tabela */
+        }
+        .table {
+            background-color: #ffffff; /* Fundo da tabela */
+            width: 95%; /* Defina uma largura que faça sentido para você */
+            margin: auto; /* Centraliza a tabela horizontalmente */
+            border: 1px solid #dee2e6; /* Bordas externas da tabela */
+            border-collapse: collapse; /* Junta as bordas para o estilo "planilha" */
+        }
+        .table th, .table td {
+            border: 1px solid #dee2e6; /* Bordas entre as células, imitando planilha do Excel */
+            padding: 12px 15px; /* Espaçamento interno nas células */
+            text-align: left; /* Texto alinhado à esquerda */
+            vertical-align: middle; /* Centraliza verticalmente */
+        }
+        .table thead th {
+            background-color: #007bff; /* Cor de fundo do cabeçalho da tabela */
+            color: white; /* Cor do texto do cabeçalho da tabela */
+            font-weight: bold; /* Negrito no cabeçalho */
+        }
+        .table tbody tr:hover {
+            background-color: #f1f3f5; /* Fundo claro ao passar o mouse nas linhas */
+        }
+        .btn {
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Transições suaves */
+            border-radius: 0.25rem; /* Bordas arredondadas */
+            text-decoration: none; /* Remove sublinhado */
+            padding: 0.5rem 1rem; /* Ajuste no padding para uniformidade dos botões */
+        }
+        .btn-warning {
+            background-color: #ffc107; /* Cor do botão Editar */
+            color: black; /* Cor do texto do botão */
+        }
+        .btn-warning:hover {
+            background-color: #e0a800; /* Cor ao passar o mouse sobre o botão Editar */
+            transform: translateY(-2px); /* Efeito de elevação ao passar o mouse */
+        }
+        .btn-danger {
+            background-color: #dc3545; /* Cor do botão Excluir */
+            color: white; /* Cor do texto do botão */
+        }
+        .btn-danger:hover {
+            background-color: #c82333; /* Cor ao passar o mouse sobre o botão Excluir */
+            transform: translateY(-2px); /* Efeito de elevação ao passar o mouse */
+        }
+        .footer {
+            background-color: #f8f9fa; /* Cor de fundo do rodapé */
+            padding: 20px; /* Espaçamento interno do rodapé */
+            text-align: center; /* Centraliza o texto do rodapé */
+            position: relative; /* Permite que o rodapé se posicione corretamente */
+            bottom: 0; /* Posiciona o rodapé na parte inferior */
+            width: 100%; /* Largura total do rodapé */
+            border-top: 1px solid #e0e0e0; /* Linha superior do rodapé */
+        }
+        .navbar-brand {
+            font-size: 1.5rem; /* Tamanho do nome da marca */
+            font-weight: bold; /* Negrito */
+            color: #343a40; /* Cor do texto da marca */
+        }
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra da navbar */
+        }
+        /* Ajuste do layout dos botões para ficarem lado a lado uniformemente */
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem; /* Espaçamento entre os botões */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Cabeçalho -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Sistema de Produtos</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="ms-auto">
+                <a href="/produto/cadastrar" class="btn btn-primary me-2">Novo Produto</a>
+                <a href="#" class="btn btn-outline-secondary me-2">Sobre</a>
+                <a href="#" class="btn btn-outline-secondary">Contato</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container" layout:fragment="conteudo">
+    <h1 class="text-center">Lista de Produtos</h1>
+
+    <div th:if="${msg}" class="alert alert-info" th:text="${msg}"></div>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="produto : ${produtos}">
+            <td th:text="${produto.id}"></td>
+            <td th:text="${produto.nome}"></td>
+            <td th:text="${produto.descricao}"></td>
+            <td th:text="${produto.preco}"></td>
+            <td th:text="${produto.quantidade}"></td>
+            <td>
+                <div class="action-buttons">
+                    <a th:href="@{/produto/editar/{id}(id=${produto.id})}" class="btn btn-warning">Editar</a>
+                    <form th:action="@{/produto/excluir}" method="post" style="display:inline;">
+                        <input type="hidden" name="id" th:value="${produto.id}">
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2024 Sistema de Produtos - Todos os direitos reservados.</p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
