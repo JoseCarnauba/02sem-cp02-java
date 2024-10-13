@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR"
+<html lang="pt-br"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
@@ -11,15 +11,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            padding-top: 56px; /* Espaço para a navbar fixa */
-            background-color: #f8f9fa; /* Cor de fundo clara */
+            background-color: #f4f4f4; /* Cor de fundo suave */
             font-family: 'Roboto', sans-serif; /* Fonte moderna */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: 0; /* Removido espaço superior */
+        }
+        header {
+            background: #5B6BCE; /* Azul Suave */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+        }
+        .navbar {
+            justify-content: center;
+            text-align: center;
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            margin: 0 auto;
+            text-align: center;
         }
         h1 {
-            color: #007bff; /* Cor do título */
-            font-size: 2.5rem; /* Tamanho do título */
-            font-weight: bold; /* Negrito */
-            margin-bottom: 30px; /* Espaçamento inferior */
+            color: #333; /* Cor do título */
+            margin: 10px 0 20px; /* Menos margem superior para aproximar do cabeçalho */
+            text-align: center;
+            font-weight: 700; /* Texto mais forte */
         }
         .alert {
             margin-bottom: 20px; /* Espaçamento entre alertas e a tabela */
@@ -29,10 +50,10 @@
             width: 95%; /* Defina uma largura que faça sentido para você */
             margin: auto; /* Centraliza a tabela horizontalmente */
             border: 1px solid #dee2e6; /* Bordas externas da tabela */
-            border-collapse: collapse; /* Junta as bordas para o estilo "planilha" */
+            border-collapse: collapse;
         }
         .table th, .table td {
-            border: 1px solid #dee2e6; /* Bordas entre as células, imitando planilha do Excel */
+            border: 1px solid #dee2e6; /* Bordas entre as células */
             padding: 12px 15px; /* Espaçamento interno nas células */
             text-align: left; /* Texto alinhado à esquerda */
             vertical-align: middle; /* Centraliza verticalmente */
@@ -47,13 +68,13 @@
         }
         .btn {
             transition: background-color 0.3s ease, transform 0.3s ease; /* Transições suaves */
-            border-radius: 0.25rem; /* Bordas arredondadas */
+            border-radius: 8px; /* Bordas arredondadas */
             text-decoration: none; /* Remove sublinhado */
             padding: 0.5rem 1rem; /* Ajuste no padding para uniformidade dos botões */
+            color: #fff; /* Cor do texto do botão */
         }
         .btn-warning {
             background-color: #ffc107; /* Cor do botão Editar */
-            color: black; /* Cor do texto do botão */
         }
         .btn-warning:hover {
             background-color: #e0a800; /* Cor ao passar o mouse sobre o botão Editar */
@@ -61,59 +82,54 @@
         }
         .btn-danger {
             background-color: #dc3545; /* Cor do botão Excluir */
-            color: white; /* Cor do texto do botão */
         }
         .btn-danger:hover {
             background-color: #c82333; /* Cor ao passar o mouse sobre o botão Excluir */
             transform: translateY(-2px); /* Efeito de elevação ao passar o mouse */
         }
+        .btn-primary {
+            background-color: #5B6BCE; /* Mesma cor do cabeçalho para o botão Novo Produto */
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #4e5cb8; /* Cor ao passar o mouse no botão Novo Produto */
+        }
         .footer {
-            background-color: #f8f9fa; /* Cor de fundo do rodapé */
-            padding: 20px; /* Espaçamento interno do rodapé */
-            text-align: center; /* Centraliza o texto do rodapé */
-            position: relative; /* Permite que o rodapé se posicione corretamente */
-            bottom: 0; /* Posiciona o rodapé na parte inferior */
-            width: 100%; /* Largura total do rodapé */
-            border-top: 1px solid #e0e0e0; /* Linha superior do rodapé */
+            background: #5B6BCE; /* Azul Suave */
+            color: white;
+            text-align: center; /* Centraliza o texto do footer */
+            padding: 8px 0;
+            margin-top: auto; /* Posiciona o rodapé na parte inferior */
         }
-        .navbar-brand {
-            font-size: 1.5rem; /* Tamanho do nome da marca */
-            font-weight: bold; /* Negrito */
-            color: #343a40; /* Cor do texto da marca */
-        }
-        .navbar {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra da navbar */
-        }
-        /* Ajuste do layout dos botões para ficarem lado a lado uniformemente */
-        .action-buttons {
+        .button-group {
             display: flex;
-            gap: 0.5rem; /* Espaçamento entre os botões */
+            justify-content: flex-start; /* Alinha o botão à esquerda */
+            margin-bottom: 10px; /* Espaço abaixo do botão */
+            margin-left: 36px;
         }
     </style>
 </head>
 <body>
 
 <!-- Cabeçalho -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">Sistema de Produtos</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <div class="ms-auto">
-                <a href="/produto/cadastrar" class="btn btn-primary me-2">Novo Produto</a>
-                <a href="#" class="btn btn-outline-secondary me-2">Sobre</a>
-                <a href="#" class="btn btn-outline-secondary">Contato</a>
-            </div>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid justify-content-center">
+            <a class="navbar-brand" href="#">
+                Sistema de Produtos
+            </a>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>
 
 <div class="container" layout:fragment="conteudo">
-    <h1 class="text-center">Lista de Produtos</h1>
+    <h1>Lista de Produtos</h1>
 
     <div th:if="${msg}" class="alert alert-info" th:text="${msg}"></div>
+
+    <div class="button-group">
+        <button class="btn btn-primary" onclick="location.href='/produto/cadastrar';">Novo Produto</button>
+    </div>
 
     <table class="table table-bordered table-hover">
         <thead>
@@ -148,9 +164,7 @@
 </div>
 
 <footer class="footer">
-    <div class="container">
-        <p>© 2024 Sistema de Produtos - Todos os direitos reservados.</p>
-    </div>
+    <p>© 2024 Sistema de Produtos - Todos os direitos reservados. | Desenvolvido por: Jose Carnauba</p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

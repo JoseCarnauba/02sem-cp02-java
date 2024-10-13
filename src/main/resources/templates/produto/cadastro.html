@@ -31,10 +31,7 @@
             margin: 0 auto;
             text-align: center;
         }
-        .navbar img {
-            height: 400px; /* Ajuste o tamanho do logo conforme necessário */
-            margin-right: 20px; /* Espaço entre o logo e o texto */
-        }
+
         .form-card {
             background: #ffffff;
             border-radius: 10px;
@@ -42,7 +39,7 @@
             padding: 40px;
             margin: 20px auto;
             width: 100%;
-            max-width: 400px;
+            max-width: 600px;
         }
         h1 {
             color: #333;
@@ -114,7 +111,7 @@
 </header>
 
 <div class="form-card" layout:fragment="conteudo">
-    <h1>Cadastro de Produto</h1>
+    <h1>Cadastrar Produto</h1>
 
     <form action="/produto/cadastrar" method="post">
         <input type="hidden" id="id" name="id" value="">
@@ -163,8 +160,7 @@
 </div>
 
 <footer>
-    <p>© 2024 Sistema Cadastro de Produtos. Todos os direitos reservados.</p>
-    <p>Contato: jose.dcarnauba@gmail.com</p>
+    <p>© 2024 Sistema Cadastro de Produtos - Todos os direitos reservados. | Desenvolvido por: Jose Carnauba </p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

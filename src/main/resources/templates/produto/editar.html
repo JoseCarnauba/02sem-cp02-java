@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR"
+<html lang="pt-br"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
@@ -18,15 +18,18 @@
             min-height: 100vh;
             margin: 0;
         }
+
         header {
             background: #5B6BCE; /* Azul Suave */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             padding: 12px 0;
         }
+
         .navbar {
             justify-content: center;
             text-align: center;
         }
+
         .navbar-brand {
             font-size: 1.8rem;
             font-weight: bold;
@@ -35,41 +38,80 @@
             margin: 0 auto;
             text-align: center;
         }
-        .container {
-            max-width: 800px; /* Largura máxima do formulário */
-            margin: 30px auto; /* Centraliza verticalmente e horizontalmente */
-            background-color: #ffffff; /* Fundo branco para o formulário */
-            border-radius: 12px; /* Bordas arredondadas */
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada */
-            padding: 40px; /* Espaçamento interno */
+
+        .form-card {
+            background: #ffffff;
+            border-radius: 10px; /* Bordas arredondadas */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
+            padding: 40px;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 600px; /* Largura máxima do formulário */
         }
+
         h1 {
             color: #333; /* Cor do título */
-            font-size: 2rem; /* Tamanho do título */
-            margin-bottom: 20px; /* Espaçamento inferior */
-            text-align: center; /* Centraliza o título */
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700; /* Texto mais forte */
         }
-        .alert {
-            margin-bottom: 20px; /* Espaçamento entre alertas e o formulário */
+
+        .form-control {
+            border-radius: 8px; /* Bordas arredondadas */
+            border: 1px solid #ced4da;
+            padding: 10px;
+            font-size: 16px;
+            width: calc(100% - 22px);
         }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efeito ao focar no input */
+        }
+
+        .form-label {
+            font-weight: bold; /* Texto do label em negrito */
+        }
+
+        .btn-primary {
+            background-color: #5B6BCE; /* Azul Suave */
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 16px; /* Tamanho do texto */
+            text-align: center;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 15px;
+            color: #fff; /* Texto branco */
+            text-decoration: none; /* Remove o sublinhado */
+        }
+
+        .btn-primary:hover {
+            background-color: #4A5FB2; /* Azul mais escuro para hover */
+        }
+
         footer {
             background: #5B6BCE; /* Azul Suave */
             color: white;
             text-align: center;
-            padding: 10px; /* Espaçamento interno do rodapé */
+            padding: 8px 0;
             margin-top: auto; /* Posiciona o rodapé na parte inferior */
         }
-        .btn-primary {
-            background-color: #5B6BCE; /* Azul Suave */
-            border-color: #5B6BCE; /* Borda do botão primário */
+
+        .button-group {
+            display: flex;
+            gap: 10px; /* Espaçamento entre os botões */
         }
-        .btn-primary:hover {
-            background-color: #4A5FB2; /* Azul mais escuro para hover */
-            border-color: #3B4A94; /* Borda ao passar o mouse sobre o botão primário */
+
+        .btn {
+            flex: 1; /* Os botões com o mesmo tamanho */
+            text-align: center; /* Centraliza o texto */
         }
-        .form-control:focus {
-            border-color: #5B6BCE; /* Cor da borda ao focar no input */
-            box-shadow: 0 0 5px rgba(91, 107, 206, 0.5); /* Sombra ao focar no input */
+
+        .form-control.date {
+            width: 25%; /* Ajuste de largura para campos de data */
         }
     </style>
 </head>
@@ -85,7 +127,7 @@
     </nav>
 </header>
 
-<div class="container" layout:fragment="conteudo">
+<div class="form-card" layout:fragment="conteudo">
     <h1>Editar Produto</h1>
 
     <form id="produtoForm" th:action="@{/produto/editar}" method="post" th:object="${produto}">
@@ -133,39 +175,32 @@
             <input type="text" th:field="*{categoria}" class="form-control" placeholder="Categoria do produto">
         </div>
 
-        <button type="submit" class="btn btn-primary w-100" onclick="showMessage(event)">Salvar</button>
-        <a href="/produto/listar" class="btn btn-secondary w-100 mt-2">Voltar para a lista</a>
+        <!-- Botões lado a lado -->
+        <div class="button-group">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-primary" onclick="location.href='/produto/cadastrar';">Novo Produto</button>
+        </div>
     </form>
 
-    <div id="successMessage" class="alert alert-success mt-3" style="display: none;">
-        Produto salvo com sucesso!
+    <div id="successMessage" class="alert alert-success mt-3" th:if="${success}" style="display: none;">
+        Produto atualizado com sucesso!
     </div>
 </div>
 
 <footer>
-    <p>© 2024 Sistema de Produtos - Todos os direitos reservados.</p>
+    <p>© 2024 Sistema de Produtos - Todos os direitos reservados. | Desenvolvido por: Jose Carnauba</p>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
-    function showMessage(event) {
-        event.preventDefault(); // Impede o envio do formulário
-        const form = document.getElementById('produtoForm');
-
-        // Validação do formulário
-        if (form.checkValidity()) {
-            // Simula o envio do formulário
-            setTimeout(() => {
-                // Exibe a mensagem de sucesso
-                document.getElementById('successMessage').style.display = 'block';
-                // Aqui você pode adicionar a lógica para realmente enviar o formulário se necessário
-            }, 500);
-        } else {
-            // Se o formulário não for válido, exibe os erros
-            form.reportValidity();
+    // Mostrar a mensagem de sucesso após o envio
+    document.addEventListener("DOMContentLoaded", function () {
+        const successMessage = document.getElementById('successMessage');
+        if (successMessage.innerHTML.trim()) {
+            successMessage.style.display = 'block';
         }
-    }
+    });
 </script>
 </body>
 </html>
