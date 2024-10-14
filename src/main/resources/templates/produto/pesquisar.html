@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pesquisa de Produtos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4; /* Cor de fundo suave */
+            font-family: 'Roboto', sans-serif; /* Fonte moderna */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: 0; /* Removido espaço superior */
+        }
+        header {
+            background: #5B6BCE; /* Azul Suave */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+        }
+        .navbar {
+            justify-content: space-between; /* Espaça os itens da navbar */
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px; /* Adiciona espaço à direita do nome do sistema */
+            text-align: center; /* Centraliza o título */
+            flex-grow: 1; /* Permite que o título ocupe o espaço restante */
+        }
+        .btn-novo-produto {
+            background-color: #28a745; /* Verde para o botão Novo Produto */
+            border: none;
+        }
+        .btn-novo-produto:hover {
+            background-color: #218838; /* Verde escuro ao passar o mouse */
+        }
+        .btn-pesquisar {
+            background-color: #6f42c1; /* Cor elegante para o botão Pesquisar */
+            border: none;
+        }
+        .btn-pesquisar:hover {
+            background-color: #5a3e9a; /* Cor ao passar o mouse sobre o botão Pesquisar */
+        }
+        h1 {
+            color: #333; /* Cor do título */
+            margin: 10px 0 20px; /* Margens ajustadas */
+            text-align: center; /* Centraliza o título */
+            font-weight: 700; /* Texto mais forte */
+        }
+        .alert {
+            margin-bottom: 20px; /* Espaçamento entre alertas e a tabela */
+        }
+        .table {
+            background-color: #ffffff; /* Fundo da tabela */
+            width: 95%; /* Defina uma largura que faça sentido para você */
+            margin: auto; /* Centraliza a tabela horizontalmente */
+            border: 1px solid #dee2e6; /* Bordas externas da tabela */
+            border-collapse: collapse;
+        }
+        .table th, .table td {
+            border: 1px solid #dee2e6; /* Bordas entre as células */
+            padding: 12px 15px; /* Espaçamento interno nas células */
+            text-align: left; /* Texto alinhado à esquerda */
+            vertical-align: middle; /* Centraliza verticalmente */
+        }
+        .table thead th {
+            background-color: #007bff; /* Cor de fundo do cabeçalho da tabela */
+            color: white; /* Cor do texto do cabeçalho da tabela */
+            font-weight: bold; /* Negrito no cabeçalho */
+        }
+        .table tbody tr:hover {
+            background-color: #f1f3f5; /* Fundo claro ao passar o mouse nas linhas */
+        }
+        .btn {
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Transições suaves */
+            border-radius: 8px; /* Bordas arredondadas */
+            text-decoration: none; /* Remove sublinhado */
+            padding: 0.5rem 1rem; /* Ajuste no padding para uniformidade dos botões */
+            color: #fff; /* Cor do texto do botão */
+        }
+        .btn-warning {
+            background-color: #ffc107; /* Cor do botão Editar */
+        }
+        .btn-warning:hover {
+            background-color: #e0a800; /* Cor ao passar o mouse sobre o botão Editar */
+            transform: translateY(-2px); /* Efeito de elevação ao passar o mouse */
+        }
+        .btn-danger {
+            background-color: #dc3545; /* Cor do botão Excluir */
+        }
+        .btn-danger:hover {
+            background-color: #c82333; /* Cor ao passar o mouse sobre o botão Excluir */
+            transform: translateY(-2px); /* Efeito de elevação ao passar o mouse */
+        }
+        .footer {
+            background: #5B6BCE; /* Azul Suave */
+            color: white;
+            text-align: center; /* Centraliza o texto do footer */
+            padding: 8px 0;
+            margin-top: auto; /* Posiciona o rodapé na parte inferior */
+        }
+        .form-row {
+            justify-content: center; /* Centraliza a linha do formulário */
+            margin-bottom: 1rem; /* Espaçamento inferior entre as linhas */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Cabeçalho -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                Sistema de Produtos
+            </a>
+            <button class="btn btn-novo-produto" onclick="location.href='/produto/cadastrar';">Novo Produto</button>
+        </div>
+    </nav>
+</header>
+
+<div class="container" layout:fragment="conteudo">
+    <h1>Pesquisa de Produtos</h1>
+
+    <div th:if="${msg}" class="alert alert-info" th:text="${msg}"></div>
+
+    <form th:action="@{/produto/pesquisar}" method="get" class="mb-4">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-2">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" id="nome" name="nome" class="form-control" th:value="${nome}">
+            </div>
+            <div class="col-md-2">
+                <label for="descricao" class="form-label">Descrição:</label>
+                <input type="text" id="descricao" name="descricao" class="form-control" th:value="${descricao}">
+            </div>
+            <div class="col-md-2">
+                <label for="precoMin" class="form-label">Preço Mínimo:</label>
+                <input type="number" id="precoMin" name="precoMin" class="form-control" th:value="${precoMin}">
+            </div>
+            <div class="col-md-2">
+                <label for="precoMax" class="form-label">Preço Máximo:</label>
+                <input type="number" id="precoMax" name="precoMax" class="form-control" th:value="${precoMax}">
+            </div>
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-pesquisar">Pesquisar</button>
+            </div>
+        </div>
+    </form>
+
+
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Data de Fabricação</th> <!-- Nova coluna -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="produto : ${produtos}">
+            <td th:text="${produto.id}"></td>
+            <td th:text="${produto.nome}"></td>
+            <td th:text="${produto.descricao}"></td>
+            <td th:text="${produto.preco}"></td>
+            <td th:text="${produto.quantidade}"></td>
+            <td th:text="${produto.dataFabricacao}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer class="footer">
+    <p>© 2024 Sistema de Produtos - Todos os direitos reservados. | Desenvolvido por: Jose Carnauba</p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

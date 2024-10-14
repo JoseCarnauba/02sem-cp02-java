@@ -20,6 +20,12 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+    // Método para ir a página inicial
+    @GetMapping("/inicio")
+    public String inicio() {
+        return "produto/inicio";
+    }
+
     // Método para listar todos os produtos
     @GetMapping("/listar")
     public String listar(Model model) {
@@ -93,6 +99,6 @@ public class ProdutoController {
         if (produtos.isEmpty() && nome != null && !nome.trim().isEmpty()) {
             model.addAttribute("msg", "Nenhum produto encontrado com o nome: " + nome);
         }
-        return "produto/lista"; // Retorna a lista de produtos filtrados
+        return "produto/pesquisar"; // Retorna a lista de produtos filtrados
     }
 }

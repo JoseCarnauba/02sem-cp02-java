@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Adicionando o favicon -->
+    <link rel="icon" href="/img/sistema.png" type="image/png">
+
+    <style>
+        body {
+            background-color: #f4f4f4; /* Cor de fundo suave */
+            font-family: 'Roboto', sans-serif; /* Fonte moderna */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: 0; /* Removido espaço superior */
+        }
+        header {
+            background: #5B6BCE; /* Azul Suave */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+        }
+        .navbar {
+            justify-content: flex-start; /* Alinhando os itens à esquerda */
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            margin: 0 auto; /* Centraliza a marcação */
+            padding-left: 20px; /* Espaçamento à esquerda */
+            padding-right: 20px; /* Espaçamento à direita */
+            padding-bottom: 15px; /* Espaçamento abaixo do título */
+        }
+        .nav-link {
+            margin: 0 10px; /* Margem entre os botões */
+        }
+        .nav-button {
+            background-color: #0056b3; /* Azul um pouco mais escuro */
+            color: white;
+            border: none; /* Remove a borda */
+            border-radius: 5px; /* Bordas levemente arredondadas */
+            padding: 10px 20px; /* Padding para um tamanho maior */
+            transition: background-color 0.3s, transform 0.3s; /* Transições suaves */
+            text-decoration: none; /* Remove o sublinhado */
+            font-weight: bold; /* Texto em negrito */
+        }
+        .nav-button:hover {
+            background-color: #004494; /* Azul mais escuro ao passar o mouse */
+            transform: scale(1.05); /* Efeito de aumento ao passar o mouse */
+        }
+        h1 {
+            color: #333; /* Cor do título */
+            margin: 40px 0; /* Aumentado para espaçamento */
+            text-align: center;
+            font-weight: 700; /* Texto mais forte */
+        }
+        img {
+            display: block;
+            margin: 20px auto; /* Centraliza a imagem e adiciona margem acima e abaixo */
+            max-width: 100%; /* Responsividade */
+            height: auto; /* Mantém a proporção da imagem */
+        }
+        .footer {
+            background: #5B6BCE; /* Azul Suave */
+            color: white;
+            text-align: center; /* Centraliza o texto do footer */
+            padding: 8px 0;
+            margin-top: auto; /* Posiciona o rodapé na parte inferior */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Cabeçalho -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <div class="navbar-nav">
+                <a class="nav-link nav-button" href="/produto/listar">Lista de Produtos</a>
+                <a class="nav-link nav-button" href="/produto/cadastrar">Cadastrar Produto</a>
+                <a class="nav-link nav-button" href="/produto/pesquisar">Pesquisar Produto</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Conteúdo Principal -->
+<div class="container" layout:fragment="conteudo">
+    <h1>Sistema de Cadastro de Produtos</h1>
+    <!-- Inserindo a imagem abaixo do h1 -->
+    <img src="/img/sisitema1.jpg" alt="Tecnologia" class="img-fluid">
+</div>
+
+<!-- Rodapé -->
+<footer class="footer">
+    <p>© 2024 Sistema de cadastro de Produtos - Todos os direitos reservados. | Desenvolvido Por: Jose Carnauba</p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
